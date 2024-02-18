@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "OLEDB-Runner": {
+      "commandName": "Project",
+      "commandLineArgs": "'Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\"F:\\Programacion\\Proyectos\\Prueba\\Pruebas OLED-js\\\"; Extended Properties=\"text;HDR=Yes;CharacterSet=65001;FMT=Delimited(,)\";'"
+    }
+  }
+}
