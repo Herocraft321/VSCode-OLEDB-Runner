@@ -1,7 +1,11 @@
 {
   "name": "oledb-runner",
   "displayName": "OLEDB-Runner",
-  "description": "",
+  "description": "This extension is used to execute OLEDB queries to CSV files.",
+  "author": {
+    "name": "Israel Ojeda Ropero",
+    "email": "israelisrael219@gmail.com"
+  },
   "version": "0.0.2",
   "engines": {
     "vscode": "^1.86.0"
@@ -9,6 +13,10 @@
   "categories": [
     "Other"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Herocraft321/oledb-runner.git"
+  },
   "activationEvents": [],
   "main": "./src/extension",
   "contributes": {
