@@ -50,13 +50,13 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 
 	let disposable2 = vscode.commands.registerCommand('oledb-runner.Ejecutar', async () => {
-		vscode.window.showErrorMessage(__dirname);
-		const runner = '.\\..\\resources\\Runner\\OLEDB-Runner.exe';
+		const runner = __dirname.substring(0,__dirname.length -3) + 'resources\\Runner\\OLEDB-Runner.exe';
+		vscode.window.showInformationMessage(runner);
 		const editor = vscode.window.activeTextEditor;
 		const selectedText = editor?.document.getText(editor.selection);
 		const allText = editor?.document.getText();
 		let query = selectedText || allText;
-		vscode.window.showErrorMessage("aaaa");
+		
 		if (connectionString === ''){
 			vscode.window.showErrorMessage('Porfavor introduce una ruta para poder ejecutar la consulta. Ejcuta el comando "Configurar Ruta - OLEDB"');
 			return;

@@ -64,7 +64,8 @@ function activate(context) {
         console.log(connectionString);
     });
     let disposable2 = vscode.commands.registerCommand('oledb-runner.Ejecutar', async () => {
-        const runner = '.\\resources\\Runner\\OLEDB-Runner.exe';
+        const runner = __dirname.substring(0, __dirname.length - 3) + 'resources\\Runner\\OLEDB-Runner.exe';
+        vscode.window.showInformationMessage(runner);
         const editor = vscode.window.activeTextEditor;
         const selectedText = editor?.document.getText(editor.selection);
         const allText = editor?.document.getText();
