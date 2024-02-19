@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "as8pJ4LkD1TPtebvPmDmEjhL1v0XC+P6XsO12SC4K7E7dpFQxQSUpkdTq0Ekb2r1W17tLwK3dBg7Sa0in38w2Q==",
+  "dgSpecHash": "hsGLacsvEY92dS8ZMcoJyHBmMM1+S77pEoLIFDzD220T3MjY35a20EEEDVXAH5dFq0h4FvJxd+jnRt8yYo8KVg==",
   "success": true,
-  "projectFilePath": "F:\\Programacion\\Proyectos\\ExtensionesVSCode\\UsarOLEDB\\oledb-runner\\resource\\OLEDB-Runner\\OLEDB-Runner\\OLEDB-Runner.csproj",
+  "projectFilePath": "F:\\Programacion\\Proyectos\\ExtensionesVSCode\\UsarOLEDB\\oledb-runner\\resources\\OLEDB-Runner\\OLEDB-Runner\\OLEDB-Runner.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kuhaku\\.nuget\\packages\\system.configuration.configurationmanager\\8.0.0\\system.configuration.configurationmanager.8.0.0.nupkg.sha512",
     "C:\\Users\\kuhaku\\.nuget\\packages\\system.data.oledb\\8.0.0\\system.data.oledb.8.0.0.nupkg.sha512",

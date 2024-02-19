@@ -308,11 +308,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\Programacion\\Proyectos\\ExtensionesVSCode\\UsarOLEDB\\oledb-runner\\resource\\OLEDB-Runner\\OLEDB-Runner\\OLEDB-Runner.csproj",
+      "projectUniqueName": "F:\\Programacion\\Proyectos\\ExtensionesVSCode\\UsarOLEDB\\oledb-runner\\resources\\OLEDB-Runner\\OLEDB-Runner\\OLEDB-Runner.csproj",
       "projectName": "OLEDB-Runner",
-      "projectPath": "F:\\Programacion\\Proyectos\\ExtensionesVSCode\\UsarOLEDB\\oledb-runner\\resource\\OLEDB-Runner\\OLEDB-Runner\\OLEDB-Runner.csproj",
+      "projectPath": "F:\\Programacion\\Proyectos\\ExtensionesVSCode\\UsarOLEDB\\oledb-runner\\resources\\OLEDB-Runner\\OLEDB-Runner\\OLEDB-Runner.csproj",
       "packagesPath": "C:\\Users\\kuhaku\\.nuget\\packages\\",
-      "outputPath": "F:\\Programacion\\Proyectos\\ExtensionesVSCode\\UsarOLEDB\\oledb-runner\\resource\\OLEDB-Runner\\OLEDB-Runner\\obj\\",
+      "outputPath": "F:\\Programacion\\Proyectos\\ExtensionesVSCode\\UsarOLEDB\\oledb-runner\\resources\\OLEDB-Runner\\OLEDB-Runner\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

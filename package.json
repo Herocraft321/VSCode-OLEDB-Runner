@@ -2,7 +2,7 @@
   "name": "oledb-runner",
   "displayName": "OLEDB-Runner",
   "description": "",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.86.0"
   },
@@ -10,7 +10,7 @@
     "Other"
   ],
   "activationEvents": [],
-  "main": "./src/extension.ts",
+  "main": "./src/extension",
   "contributes": {
     "commands": [
       {
@@ -25,14 +25,14 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "oledb-execution",
+          "id": "oledb-runner",
           "title": "OLEDB Execution",
           "icon": "./resources/icon.svg"
         }
       ]
     },
     "views": {
-      "oledb-execution": [
+      "oledb-runner": [
         {
           "id": "configuration",
           "name": "Configuracion"
@@ -55,8 +55,7 @@
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src --ext ts",
-    "test": "vscode-test"
+    "lint": "eslint src --ext ts"
   },
   "devDependencies": {
     "@types/vscode": "^1.86.0",
