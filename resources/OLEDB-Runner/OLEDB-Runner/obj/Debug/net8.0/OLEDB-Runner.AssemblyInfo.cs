@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OLEDB-Runner")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e64095c6c4252d5f2fa3e8d26958327e4b83d765")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9e5b3d5b40c36ac252a466d09ba46aa574f4f0e5")]
 [assembly: System.Reflection.AssemblyProductAttribute("OLEDB-Runner")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OLEDB-Runner")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
