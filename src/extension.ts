@@ -6,30 +6,41 @@ const { spawn } = require('child_process');
 export function activate(context: vscode.ExtensionContext) {
 
 	console.log('Congratulations, your extension "oledb-runner" is now active!');
-	let connectionString = '';
+
+	const connectionString = 'Provider={Provider};Data Source="{Path}"; Extended Properties="text;HDR=Yes;CharacterSet=65001;FMT=Delimited({Delimiter})";';
+
+	function getConfig (){
+		const allConfig = vscode.workspace.getConfiguration();
+		defProvider = allConfig.get<string>("OLEDB-Runner.Engine") || '';
+		defDelimiter = allConfig.get<string>("OLEDB-Runner.Defaul-Delimiter",) || '';
+	};
+
+	let defProvider = '';
+	let defDelimiter = '';
+
+	let path = '';
+	let provider = '';
+	let delimiter = '';
 	
 	/**
 	 * Creating the first command to configure OLEDB.
 	 */
 	let disposable = vscode.commands.registerCommand('oledb-runner.configurarRuta', async () => {	
-		const editor = vscode.window.activeTextEditor;
-		const selectedText = editor?.document.getText(editor.selection);
-		const defDelimitar = ',';
+		// The configuration is collected to update it
+		getConfig();
 
 		/**
 		 * The user is asked to enter the route via keyboard.
 		 */
 		const inputPath = await vscode.window.showInputBox({
-			placeHolder: "Escribe la ruta del directorio",
-			prompt: "Guarda el directorio donde se usara OLEDB.",
-			value: selectedText
+			placeHolder: "Write the directory path",
+			prompt: "Save the directory where OLEDB will be used."
 		});
 
 		/**
 		 * It is verified that the user has canceled the command by pressing the 'ESC' key
 		 */
 		if (inputPath === undefined){
-			console.log('Salir');
 			return;	
 		}
 		
@@ -38,34 +49,74 @@ export function activate(context: vscode.ExtensionContext) {
 		 */
 		if (inputPath === '' || !fs.existsSync(inputPath?.replace(/"/gi,''))) {
 			console.log(inputPath);
-			vscode.window.showErrorMessage('La ruta expecificada no existe. Porfavor introduce una ruta valida.');
+			vscode.window.showErrorMessage('The specified path does not exist. Please enter a valid route.');
 			vscode.commands.executeCommand('oledb-runner.configurarRuta');
 			return;			
 		}
+
+		path = inputPath;
+	});	
+
+	/**
+	 * Created the command to set delimiter CSV
+	 */
+	let disposable2 = vscode.commands.registerCommand('oledb-runner.configurarDelimitador', async () => {
+		// The configuration is collected to update it
+		getConfig();
 		
 		/**
 		 * The user is asked to enter the file delimiter. If it is empty, the default delimiter will be set.
 		 */
-		const delimiter = await vscode.window.showInputBox({
-			placeHolder: "Escribe el delimitador de los CSV.",
-			prompt: "Determina el delimitador de los ficheros CSV. Por defecto ','",
-			value: selectedText
+		const inDelimiter = await vscode.window.showInputBox({
+			placeHolder: "Write the delimiter of the CSV.",
+			prompt: `Determines the delimiter of CSV files. Default '${defDelimiter}'`
 		});
 
-		if (delimiter === undefined){
-			console.log('Delimitador por defecto');	
+		if (inDelimiter === undefined){
+			if(defDelimiter === undefined || defDelimiter.toString() === ''){
+				vscode.window.showErrorMessage('A default delimiter has not been set. Please enter a default delimiter.');
+				return;
+			}
 		}
 
-		/**
-		 * The 'ConnectionString' is mounted
-		 */
-		connectionString = 'Provider=Microsoft.ACE.OLEDB.12.0;Data Source="' + inputPath + '"; Extended Properties="text;HDR=Yes;CharacterSet=65001;FMT=Delimited('+ (delimiter || defDelimitar) + ')";';
-		console.log(connectionString);
+		delimiter = (inDelimiter || defDelimiter?.toString() || '');
 	});
 
-	let disposable2 = vscode.commands.registerCommand('oledb-runner.Ejecutar', async () => {
+	/**
+	 * Created the command to set OLEDB provider
+	 */
+	let disposable3 = vscode.commands.registerCommand('oledb-runner.configurarProvider', async () => {
+		// The configuration is collected to update it
+		getConfig();
+
+		/**
+		 * The user is asked to enter the OLEDB provider via keyboard.
+		 */
+		const inProvider = await vscode.window.showInputBox({
+			placeHolder: "Escriba el proveedor de OLEDB",
+			prompt: `Determina el proveedor de OLEDB. Por defecto '${defProvider}'`
+		});
+
+		if (inProvider === undefined){
+			if(defProvider === undefined || defProvider.toString() === ''){
+				vscode.window.showErrorMessage('A default provider has not been set. Please enter a default provider.');
+				return;
+			}	
+		}
+
+		provider = (inProvider || defProvider || '');
+	});
+
+	/**
+	 * Created the command to run OLEDB
+	 */
+	let disposable4 = vscode.commands.registerCommand('oledb-runner.Ejecutar', async () => {
+		// The configuration is collected to update it
+		getConfig();
+
 		// The path where the executable is is mounted
 		const runner = __dirname.substring(0,__dirname.length -3) + 'resources\\Runner\\OLEDB-Runner.exe';
+
 		// The text of the active editor and the selected text are collected. If nothing is selected, the full text will be used.
 		const editor = vscode.window.activeTextEditor;
 		const selectedText = editor?.document.getText(editor.selection);
@@ -75,7 +126,7 @@ export function activate(context: vscode.ExtensionContext) {
 		/**
 		 * It is checked that the 'ConnectionString' is filled, otherwise the command will end with an error message
 		 */
-		if (connectionString === ''){
+		if (path === ''){
 			vscode.window.showErrorMessage('Porfavor introduce una ruta para poder ejecutar la consulta. Ejcuta el comando "Configurar Ruta - OLEDB"');
 			return;
 		}
@@ -86,7 +137,7 @@ export function activate(context: vscode.ExtensionContext) {
 		/**
 		 * OLEDB executable is released
 		 */
-		const process = spawn(runner, [connectionString,query]); 
+		const process = spawn(runner, [connectionString.replace("{Provider}",provider).replace("{Path}",path).replace("{Delimiter}",delimiter),query]); 
 
 		/**
 		 * If the process was executed correctly, a view is created with the returned HTML table
@@ -119,12 +170,14 @@ export function activate(context: vscode.ExtensionContext) {
 			console.log(`Child process exited with code ${code}`); 
 		});
 	});
-
+	
 	/**
 	 * Variables are called with commands
 	 */
 	context.subscriptions.push(disposable);
 	context.subscriptions.push(disposable2);
+	context.subscriptions.push(disposable3);
+	context.subscriptions.push(disposable4);
 }
 
 // This method is called when your extension is deactivated

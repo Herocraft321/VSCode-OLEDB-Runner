@@ -51,18 +51,28 @@
       "oledb-runner": [
         {
           "id": "configuration",
-          "name": "Configuracion"
+          "name": "configuration"
         }
       ]
     },"configuration": [
       {
         "title": "OLEDB-Runner",
         "properties": {
-          "OLEDB.engine": {
+          "OLEDB-Runner.Engine": {
             "type": "string",
             "default": "x86",
             "enum": ["x86", "x64"],
             "description": "Describes the type of OLEDB system engine"
+          },
+          "OLEDB-Runner.Defaul-Delimiter":{
+            "type": "string",
+            "default": ",",
+            "description": "Determines the default delimiter for CSV files"
+          },
+          "OLEDB-Runner.Defaul-Provider":{
+            "type": "string",
+            "default": "Microsoft.ACE.OLEDB.12.0",
+            "description": "Determine the default OLEDB provider"
           }
         }
       }
