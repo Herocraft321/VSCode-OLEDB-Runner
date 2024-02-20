@@ -23,19 +23,19 @@
     "commands": [
       {
         "command": "oledb-runner.configurarRuta",
-        "title": "Configurar Ruta - OLEDB"
+        "title": "Configure Path - OLEDB"
       },
       {
         "command": "oledb-runner.Ejecutar",
-        "title": "Ejecutar Consulta - OLEDB"
+        "title": "Execute - OLEDB"
       },
       {
         "command": "oledb-runner.configurarProvider",
-        "title": "Configurar Provider - OLEDB"
+        "title": "Configure Provider - OLEDB"
       },
       {
         "command": "oledb-runner.configurarDelimitador",
-        "title": "Configurar Delimitador - OLEDB"
+        "title": "Configure Delimiter - OLEDB"
       }
     ],
     "viewsContainers": {
