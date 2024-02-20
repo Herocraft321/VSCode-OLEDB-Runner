@@ -28,6 +28,14 @@
       {
         "command": "oledb-runner.Ejecutar",
         "title": "Ejecutar Consulta - OLEDB"
+      },
+      {
+        "command": "oledb-runner.configurarProvider",
+        "title": "Configurar Provider - OLEDB"
+      },
+      {
+        "command": "oledb-runner.configurarDelimitador",
+        "title": "Configurar Delimitador - OLEDB"
       }
     ],
     "viewsContainers": {
@@ -48,12 +56,13 @@
       ]
     },"configuration": [
       {
-        "title": "configuration",
+        "title": "OLEDB-Runner",
         "properties": {
-          "frontMatter.taxonomy.dateField": {
+          "OLEDB.engine": {
             "type": "string",
-            "default": "date",
-            "description": "Specifies the date field name to use in your Front Matter"
+            "default": "x86",
+            "enum": ["x86", "x64"],
+            "description": "Describes the type of OLEDB system engine"
           }
         }
       }

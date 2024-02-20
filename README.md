@@ -1,7 +1,7 @@
 # oledb-runner README
 
 ## Features
-This extension is used to execute OLEDB queries to CSV files. 
+This VSCode extension is used to execute OLEDB queries to CSV files. 
 
 You can use comands to configure and run OLEDB query.
 ## Release Notes

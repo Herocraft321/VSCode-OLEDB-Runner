@@ -9,7 +9,7 @@ export function activate(context: vscode.ExtensionContext) {
 	let connectionString = '';
 	
 	/**
-	 * Creacion del primer comando para configurar OLEDB.
+	 * Creating the first command to configure OLEDB.
 	 */
 	let disposable = vscode.commands.registerCommand('oledb-runner.configurarRuta', async () => {	
 		const editor = vscode.window.activeTextEditor;
@@ -17,7 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const defDelimitar = ',';
 
 		/**
-		 * Se pide que el usuario introduzca por teclado la ruta
+		 * The user is asked to enter the route via keyboard.
 		 */
 		const inputPath = await vscode.window.showInputBox({
 			placeHolder: "Escribe la ruta del directorio",
@@ -26,7 +26,7 @@ export function activate(context: vscode.ExtensionContext) {
 		});
 
 		/**
-		 * Se comprueba que el usuario haya cancelado el comando pulsando la tecla 'ESC'
+		 * It is verified that the user has canceled the command by pressing the 'ESC' key
 		 */
 		if (inputPath === undefined){
 			console.log('Salir');
@@ -34,7 +34,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 		
 		/**
-		 * Se comprueba que la ruta introducida sea valida, en caso contratrio se envia un mensaje de error y se vuelve a llamar al comando.
+		 * It is checked that the route entered is valid; if not, an error message is sent and the command is called again.
 		 */
 		if (inputPath === '' || !fs.existsSync(inputPath?.replace(/"/gi,''))) {
 			console.log(inputPath);
@@ -44,7 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 		
 		/**
-		 * Se pide al usuario que introduzca el delimitador de los fichero en caso de quedar vacio se pondra el delimitador por defecto
+		 * The user is asked to enter the file delimiter. If it is empty, the default delimiter will be set.
 		 */
 		const delimiter = await vscode.window.showInputBox({
 			placeHolder: "Escribe el delimitador de los CSV.",
@@ -57,23 +57,23 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 
 		/**
-		 * Se monta el 'ConnectionString'
+		 * The 'ConnectionString' is mounted
 		 */
 		connectionString = 'Provider=Microsoft.ACE.OLEDB.12.0;Data Source="' + inputPath + '"; Extended Properties="text;HDR=Yes;CharacterSet=65001;FMT=Delimited('+ (delimiter || defDelimitar) + ')";';
 		console.log(connectionString);
 	});
 
 	let disposable2 = vscode.commands.registerCommand('oledb-runner.Ejecutar', async () => {
-		// Se monta la ruta donde esta el ejecutable
+		// The path where the executable is is mounted
 		const runner = __dirname.substring(0,__dirname.length -3) + 'resources\\Runner\\OLEDB-Runner.exe';
-		// Se recoge el texto del editor activo y el texto seleccionado, en el caso de que no se seleccione nada se usara el texto completo
+		// The text of the active editor and the selected text are collected. If nothing is selected, the full text will be used.
 		const editor = vscode.window.activeTextEditor;
 		const selectedText = editor?.document.getText(editor.selection);
 		const allText = editor?.document.getText();
 		let query = selectedText || allText;
 		
 		/**
-		 * Se comprueba que el 'ConnectionString' este relleno, en caso contrario se terminara el comando con un mensaje de error
+		 * It is checked that the 'ConnectionString' is filled, otherwise the command will end with an error message
 		 */
 		if (connectionString === ''){
 			vscode.window.showErrorMessage('Porfavor introduce una ruta para poder ejecutar la consulta. Ejcuta el comando "Configurar Ruta - OLEDB"');
@@ -84,12 +84,12 @@ export function activate(context: vscode.ExtensionContext) {
 		console.log(query);
 
 		/**
-		 * Se lanza el ejecutable de OLEDB
+		 * OLEDB executable is released
 		 */
 		const process = spawn(runner, [connectionString,query]); 
 
 		/**
-		 * Si el proceso se ejecuto correctamente, se crea un vista con la tabla HTML devuelta
+		 * If the process was executed correctly, a view is created with the returned HTML table
 		 */
 		process.stdout.on('data', (data: any) => { 
 			const panel = vscode.window.createWebviewPanel(
@@ -105,7 +105,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}); 
 		
 		/**
-		 * Si el proceso da error se lanza un mensaje con el error que ha dado
+		 * If the process gives an error, a message is sent with the error that occurred.
 		 */
 		process.stderr.on('data', (data: any) => { 
 			vscode.window.showErrorMessage(`Error: ${data}`);
@@ -113,7 +113,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}); 
 		
 		/**
-		 * Cuando el proceso se cierre se excribe por consola que el proceso termino
+		 * When the process closes, the console writes that the process ended
 		 */
 		process.on('close', (code: any) => { 
 			console.log(`Child process exited with code ${code}`); 
@@ -121,7 +121,7 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 
 	/**
-	 * Se llaman a las variables con los comandos
+	 * Variables are called with commands
 	 */
 	context.subscriptions.push(disposable);
 	context.subscriptions.push(disposable2);
