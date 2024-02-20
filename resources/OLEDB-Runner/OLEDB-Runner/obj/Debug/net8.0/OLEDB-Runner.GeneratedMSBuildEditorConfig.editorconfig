@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = OLEDB_Runner
-build_property.ProjectDir = F:\Programacion\Proyectos\ExtensionesVSCode\UsarOLEDB\oledb-runner\resources\OLEDB-Runner\OLEDB-Runner\
+build_property.ProjectDir = F:\Programacion\Proyectos\ExtensionesVSCode\UsarOLEDB\oledb-execution\resources\OLEDB-Runner\OLEDB-Runner\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
