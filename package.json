@@ -10,6 +10,7 @@
   "engines": {
     "vscode": "^1.86.0"
   },
+  "icon": "./resources/icon.png",
   "categories": [
     "Other"
   ],
@@ -22,19 +23,19 @@
   "contributes": {
     "commands": [
       {
-        "command": "oledb-runner.configurarRuta",
+        "command": "oledb-runner.configPath",
         "title": "Configure Path - OLEDB"
       },
       {
-        "command": "oledb-runner.Ejecutar",
+        "command": "oledb-runner.execute",
         "title": "Execute - OLEDB"
       },
       {
-        "command": "oledb-runner.configurarProvider",
+        "command": "oledb-runner.configProvider",
         "title": "Configure Provider - OLEDB"
       },
       {
-        "command": "oledb-runner.configurarDelimitador",
+        "command": "oledb-runner.configDelimiter",
         "title": "Configure Delimiter - OLEDB"
       }
     ],

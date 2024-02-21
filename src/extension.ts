@@ -11,8 +11,9 @@ export function activate(context: vscode.ExtensionContext) {
 
 	function getConfig (){
 		const allConfig = vscode.workspace.getConfiguration();
-		defProvider = allConfig.get<string>("OLEDB-Runner.Engine") || '';
+		defProvider = allConfig.get<string>("OLEDB-Runner.Defaul-Provider") || '';
 		defDelimiter = allConfig.get<string>("OLEDB-Runner.Defaul-Delimiter",) || '';
+		engine = allConfig.get<string>("OLEDB-Runner.Engine") || '';
 	};
 
 	let defProvider = '';
@@ -21,11 +22,11 @@ export function activate(context: vscode.ExtensionContext) {
 	let path = '';
 	let provider = '';
 	let delimiter = '';
-	
+	let engine = '';
 	/**
 	 * Creating the first command to configure OLEDB.
 	 */
-	let disposable = vscode.commands.registerCommand('oledb-runner.configurarRuta', async () => {	
+	let disposable = vscode.commands.registerCommand('oledb-runner.configPath', async () => {	
 		// The configuration is collected to update it
 		getConfig();
 
@@ -60,7 +61,7 @@ export function activate(context: vscode.ExtensionContext) {
 	/**
 	 * Created the command to set delimiter CSV
 	 */
-	let disposable2 = vscode.commands.registerCommand('oledb-runner.configurarDelimitador', async () => {
+	let disposable2 = vscode.commands.registerCommand('oledb-runner.configDelimiter', async () => {
 		// The configuration is collected to update it
 		getConfig();
 		
@@ -85,7 +86,7 @@ export function activate(context: vscode.ExtensionContext) {
 	/**
 	 * Created the command to set OLEDB provider
 	 */
-	let disposable3 = vscode.commands.registerCommand('oledb-runner.configurarProvider', async () => {
+	let disposable3 = vscode.commands.registerCommand('oledb-runner.configProvider', async () => {
 		// The configuration is collected to update it
 		getConfig();
 
@@ -110,12 +111,12 @@ export function activate(context: vscode.ExtensionContext) {
 	/**
 	 * Created the command to run OLEDB
 	 */
-	let disposable4 = vscode.commands.registerCommand('oledb-runner.Ejecutar', async () => {
+	let disposable4 = vscode.commands.registerCommand('oledb-runner.execute', async () => {
 		// The configuration is collected to update it
 		getConfig();
 
 		// The path where the executable is is mounted
-		const runner = __dirname.substring(0,__dirname.length -3) + 'resources\\Runner\\OLEDB-Runner.exe';
+		const runner = __dirname.substring(0,__dirname.length -3) + `resources\\Runner-${engine}\\OLEDB-Runner.exe`;
 
 		// The text of the active editor and the selected text are collected. If nothing is selected, the full text will be used.
 		const editor = vscode.window.activeTextEditor;
