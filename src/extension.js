@@ -31,9 +31,10 @@ function activate(context) {
     console.log('Congratulations, your extension "oledb-runner" is now active!');
     const connectionString = 'Provider={Provider};Data Source="{Path}"; Extended Properties="text;HDR=Yes;CharacterSet=65001;FMT=Delimited({Delimiter})";';
     function getConfig() {
-        const allConfig = vscode.workspace.getConfiguration();
-        defProvider = allConfig.get("OLEDB-Runner.Engine") || '';
-        defDelimiter = allConfig.get("OLEDB-Runner.Defaul-Delimiter") || '';
+        const allConfig = vscode.workspace.getConfiguration("OLEDB-Runner");
+        defProvider = allConfig["Default-Provider"] || '';
+        defDelimiter = allConfig["Default-Delimiter"] || '';
+        engine = allConfig["Engine"] || '';
     }
     ;
     let defProvider = '';
@@ -41,10 +42,13 @@ function activate(context) {
     let path = '';
     let provider = '';
     let delimiter = '';
+    let engine = '';
     /**
      * Creating the first command to configure OLEDB.
      */
-    let disposable = vscode.commands.registerCommand('oledb-runner.configurarRuta', async () => {
+    let disposable = vscode.commands.registerCommand('oledb-runner.configPath', async () => {
+        // The configuration is collected to update it
+        getConfig();
         /**
          * The user is asked to enter the route via keyboard.
          */
@@ -72,9 +76,9 @@ function activate(context) {
     /**
      * Created the command to set delimiter CSV
      */
-    let disposable2 = vscode.commands.registerCommand('oledb-runner.configurarDelimitador', async () => {
+    let disposable2 = vscode.commands.registerCommand('oledb-runner.configDelimiter', async () => {
+        // The configuration is collected to update it
         getConfig();
-        console.log(defDelimiter);
         /**
          * The user is asked to enter the file delimiter. If it is empty, the default delimiter will be set.
          */
@@ -93,7 +97,9 @@ function activate(context) {
     /**
      * Created the command to set OLEDB provider
      */
-    let disposable3 = vscode.commands.registerCommand('oledb-runner.configurarProvider', async () => {
+    let disposable3 = vscode.commands.registerCommand('oledb-runner.configProvider', async () => {
+        // The configuration is collected to update it
+        getConfig();
         /**
          * The user is asked to enter the OLEDB provider via keyboard.
          */
@@ -112,9 +118,12 @@ function activate(context) {
     /**
      * Created the command to run OLEDB
      */
-    let disposable4 = vscode.commands.registerCommand('oledb-runner.Ejecutar', async () => {
+    let disposable4 = vscode.commands.registerCommand('oledb-runner.execute', async () => {
+        // The configuration is collected to update it
+        getConfig();
         // The path where the executable is is mounted
-        const runner = __dirname.substring(0, __dirname.length - 3) + 'resources\\Runner\\OLEDB-Runner.exe';
+        const runner = __dirname.substring(0, __dirname.length - 3) + `resources\\Runner-${engine}\\OLEDB-Runner.exe`;
+        const tempFile = __dirname.substring(0, __dirname.length - 3) + `resources\\Runner-${engine}\\Temp.html`;
         // The text of the active editor and the selected text are collected. If nothing is selected, the full text will be used.
         const editor = vscode.window.activeTextEditor;
         const selectedText = editor?.document.getText(editor.selection);
@@ -124,24 +133,27 @@ function activate(context) {
          * It is checked that the 'ConnectionString' is filled, otherwise the command will end with an error message
          */
         if (path === '') {
-            vscode.window.showErrorMessage('Porfavor introduce una ruta para poder ejecutar la consulta. Ejcuta el comando "Configurar Ruta - OLEDB"');
+            vscode.window.showErrorMessage('Please enter a path to be able to execute the query. Run the command "Configure Route - OLEDB"');
             return;
         }
-        console.log(connectionString);
+        const cs = connectionString.replace("{Provider}", (provider || defProvider)).replace("{Path}", path).replace("{Delimiter}", (delimiter || defDelimiter));
+        console.log(cs);
         console.log(query);
         /**
          * OLEDB executable is released
          */
-        const process = spawn(runner, [connectionString.replace("{Provider}", provider).replace("{Path}", path).replace("{Delimiter}", delimiter), query]);
+        const process = spawn(runner, [cs, query]);
         /**
          * If the process was executed correctly, a view is created with the returned HTML table
          */
         process.stdout.on('data', (data) => {
-            const panel = vscode.window.createWebviewPanel('viewTable', 'OLEBD', vscode.ViewColumn.Two, {
+            const fileData = fs.readFile(tempFile, 'utf8');
+            const panel = vscode.window.createWebviewPanel('viewTable', 'OLEDB', vscode.ViewColumn.Two, {
                 retainContextWhenHidden: true,
                 enableScripts: true
             });
-            panel.webview.html = `${data}`;
+            panel.webview.html = `${fileData}`;
+            fs.rm(tempFile);
         });
         /**
          * If the process gives an error, a message is sent with the error that occurred.

@@ -6,7 +6,7 @@
     "name": "Israel Ojeda Ropero",
     "email": "israelisrael219@gmail.com"
   },
-  "version": "0.0.2",
+  "version": "0.0.3",
   "engines": {
     "vscode": "^1.86.0"
   },
@@ -65,12 +65,12 @@
             "enum": ["x86", "x64"],
             "description": "Describes the type of OLEDB system engine"
           },
-          "OLEDB-Runner.Defaul-Delimiter":{
+          "OLEDB-Runner.Default-Delimiter":{
             "type": "string",
             "default": ",",
             "description": "Determines the default delimiter for CSV files"
           },
-          "OLEDB-Runner.Defaul-Provider":{
+          "OLEDB-Runner.Default-Provider":{
             "type": "string",
             "default": "Microsoft.ACE.OLEDB.12.0",
             "description": "Determine the default OLEDB provider"

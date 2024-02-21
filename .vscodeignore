@@ -11,3 +11,4 @@ vsc-extension-quickstart.md
 **/*.map
 **/.vscode-test.*
 ./resources/OLEDB-Runner/*
+./resources/Install.png

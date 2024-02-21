@@ -52,7 +52,7 @@ namespace OLEDB_Runner
             }
             html += "</table>";
             
-            Console.WriteLine(html);
+            File.WriteAllText(@".\Temp.html",html);
             
         }
     }
