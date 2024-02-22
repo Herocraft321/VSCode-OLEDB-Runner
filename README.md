@@ -27,7 +27,8 @@ You can change the engine in extension settings or can add this property with `x
 
 
 ## Installation
-> [!IMPORTANT] You need .NET of your system engine (x86 or x64).<br>
+> [!IMPORTANT]
+> You need .NET of your system engine (x86 or x64).<br>
 > If you don't have .NET 6.0 or later, you can download in this [page](https://dotnet.microsoft.com/es-es/download/dotnet/6.0).
 1. Download .vsix
 2. Open view extensions (`Ctrl+Shift+X`), More actions and click in *'Install from VSIX'*<br>
