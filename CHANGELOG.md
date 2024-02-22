@@ -2,6 +2,10 @@
 
 All notable changes to the "oledb-runner" extension will be documented in this file.
 
+## v1.0.0 - 2024-02-22
+- Changed the way the query table is created .
+- Add control to update or create webViewPanel.
+
 ## v0.0.4 - 2024-02-21
 - Changed the path for the OLEDB executable file.
 - Add icon to extensions view.

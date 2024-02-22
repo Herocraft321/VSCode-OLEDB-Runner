@@ -3,11 +3,11 @@
 ## Features
 This VSCode extension is used to execute OLEDB queries to CSV files. 
 
-You can use commands to configure and run OLEDB query.
-- Run `Configure Path - OLEDB` to configure files path.
-- Run `Configure Provider - OLEDB` to configure provider.
-- Run `Configure Delimiter - OLEDB` to configure delimiter.
-- Run `Execute - OLEDB` to execute OLEDB query.
+To use the extension you need run this commands.<br> Open the command palette press the key combination `Ctrl+Shift+P`
+- `Configure Path - OLEDB` configure files path.
+- `Configure Provider - OLEDB` configure provider.
+- `Configure Delimiter - OLEDB` configure delimiter.
+- `Execute - OLEDB` execute OLEDB query.
 
 ## Settings
 You can change default values in extension settings or can add this property in settings.json. 
@@ -30,10 +30,15 @@ You can change the engine in extension settings or can add this property with `x
 > [!IMPORTANT] You need .NET of your system engine (x86 or x64).<br>
 > If you don't have .NET 6.0 or later, you can download in this [page](https://dotnet.microsoft.com/es-es/download/dotnet/6.0).
 1. Download .vsix
-2. Open view extensions (`Crtl+Shift+X`), More actions and click in *'Install from VSIX'*<br>
+2. Open view extensions (`Ctrl+Shift+X`), More actions and click in *'Install from VSIX'*<br>
 ![Install VSIX](<./resources/Install.png>)
 3. Enjoy 😀
+
 ## Release Notes
+## Version 1.0.0
+- Changed the way the query table is created .
+- Add control to update or create webViewPanel.
+
 ### Version 0.0.4
 - Changed the path for the OLEDB executable file.
 - Add icon to extensions view.

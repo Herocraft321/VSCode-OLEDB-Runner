@@ -10,12 +10,17 @@ namespace OLEDB_Runner
         {
             if (string.IsNullOrEmpty(args[0]))
             {
-                throw new ArgumentException("Se necesita especificar el parametro 'Connection String'", "Connection String");
+                throw new ArgumentException("You need to specify the 'Connection String' parameter", "Connection String");
             }
 
             if (string.IsNullOrEmpty(args[1]))
             {
-                throw new ArgumentException("Se necesita especificar el parametro 'Query'", "Query");
+                throw new ArgumentException("You need to specify the 'Query' parameter", "Query");
+            }
+
+            if (string.IsNullOrEmpty(args[2]))
+            {
+                throw new ArgumentException("You need to specify the 'TempFilePath' parameter", "TempFilePath");
             }
 
             DataTable dt = new DataTable();
@@ -51,9 +56,9 @@ namespace OLEDB_Runner
                 html += "</tr>";
             }
             html += "</table>";
-            
-            File.WriteAllText(@".\Temp.html",html);
-            
+
+            File.WriteAllText(args[2],html);
+            Console.WriteLine("OK!");
         }
     }
 }

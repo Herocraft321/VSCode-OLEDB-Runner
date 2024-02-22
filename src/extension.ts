@@ -24,6 +24,9 @@ export function activate(context: vscode.ExtensionContext) {
 	let provider = '';
 	let delimiter = '';
 	let engine = '';
+
+	let panel: vscode.WebviewPanel;
+	let visible = false;
 	/**
 	 * Creating the first command to configure OLEDB.
 	 */
@@ -133,28 +136,43 @@ export function activate(context: vscode.ExtensionContext) {
 			return;
 		}
 		const cs = connectionString.replace("{Provider}",(provider || defProvider)).replace("{Path}",path).replace("{Delimiter}",(delimiter || defDelimiter));
-		console.log(cs);
-		console.log(query);
-		
+
 		/**
 		 * OLEDB executable is released
 		 */
-		const process = spawn(runner, [cs,query]); 
+		const process = spawn(runner, [cs,query,tempFile]); 
 
 		/**
 		 * If the process was executed correctly, a view is created with the returned HTML table
 		 */
 		process.stdout.on('data', (data: any) => { 
 			data = fs.readFileSync(tempFile,{ encoding: 'utf8' });
-			const panel = vscode.window.createWebviewPanel(
-				'viewTable',
-				'OLEDB',
-				vscode.ViewColumn.Two,
-				{
-					retainContextWhenHidden:true,
-					enableScripts:true
-				}
-			);
+			/**
+			 * If webViewPanel is visible don't create more
+			 */
+			if(!visible){
+				panel = vscode.window.createWebviewPanel(
+					'viewTable',
+					'OLEDB',
+					vscode.ViewColumn.Two,
+					{
+						retainContextWhenHidden:true,
+						enableScripts:true
+					}
+				);
+				visible = true;
+			}
+
+			/**
+			 * When panel is closed visible is false
+			 */
+			panel.onDidDispose(() => {
+				visible = false;
+			});
+
+			/**
+			 * Update content of panel
+			 */
 			panel.webview.html = `${data}`; 
 			fs.rm(tempFile);
 		}); 
