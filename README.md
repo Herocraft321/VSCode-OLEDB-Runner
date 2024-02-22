@@ -36,7 +36,7 @@ You can change the engine in extension settings or can add this property with `x
 3. Enjoy 😀
 
 ## Release Notes
-## Version 1.0.0
+### Version 1.0.0
 - Changed the way the query table is created .
 - Add control to update or create webViewPanel.
 
