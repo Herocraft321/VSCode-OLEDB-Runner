@@ -2,6 +2,11 @@
 
 All notable changes to the "oledb-runner" extension will be documented in this file.
 
+## v1.1.0 - 2024-2-23
+- Add a loading screen and error screen.
+- Changed table CSS to be dynamic.
+- Add 3 new setting.
+
 ## v1.0.0 - 2024-02-22
 - Changed the way the query table is created.
 - Add control to update or create webViewPanel.

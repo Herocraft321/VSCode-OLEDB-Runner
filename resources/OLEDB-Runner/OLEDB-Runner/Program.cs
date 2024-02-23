@@ -41,7 +41,7 @@ namespace OLEDB_Runner
                 OleDbCommand comand = new OleDbCommand(args[1], oledbConnection);
                 comand.ExecuteNonQuery();
             }
-            string html = @"<style>body {text-align: center;}table {margin: 2% auto;}table,th,td {border-collapse: collapse;padding: 10px;}</style><table border='1'>";
+            string html = @"<table border='1'>";
             //add header row
             html += "<tr>";
             for (int i = 0; i < dt.Columns.Count; i++)

@@ -12,7 +12,7 @@
   },
   "icon": "icon.png",
   "categories": [
-    "Other"
+    "Testing"
   ],
   "repository": {
     "type": "git",
@@ -74,6 +74,21 @@
             "type": "string",
             "default": "Microsoft.ACE.OLEDB.12.0",
             "description": "Determine the default OLEDB provider"
+          },
+          "OLEDB-Runner.Table-CSS":{
+            "type": "string",
+            "default": "<style>body {text-align: center;}table {margin: 2% auto;}table,th,td {border-collapse: collapse;padding: 10px;}</style>",
+            "description": "Determines the style that will be used when displaying the table."
+          },
+          "OLEDB-Runner.Consulting-IMG":{
+            "type": "string",
+            "default": "https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif",
+            "description": "Set image or gif to wait for the query to be performed"
+          },
+          "OLEDB-Runner.Error-IMG":{
+            "type": "string",
+            "default": "https://i.kym-cdn.com/photos/images/newsfeed/001/384/531/8ed.jpg",
+            "description": "Set image or gif on error"
           }
         }
       }

@@ -24,7 +24,14 @@ You can change the engine in extension settings or can add this property with `x
 ```json
 "OLEDB-Runner.Engine": "x86" 
 ```
-
+You can change image to wait for the query to be performed. If you do not want to show any image, leave this option empty. 
+```json
+"OLEDB-Runner.Consulting-IMG": "https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif"
+```
+You can change image on error. If you do not want to show any image, leave this option empty. 
+```json
+"OLEDB-Runner.Error-IMG": "https://i.kym-cdn.com/photos/images/newsfeed/001/384/531/8ed.jpg",
+```
 
 ## Installation
 > [!IMPORTANT]
@@ -36,6 +43,11 @@ You can change the engine in extension settings or can add this property with `x
 3. Enjoy 😀
 
 ## Release Notes
+### Version 1.1.0
+- Add a loading screen and error screen.
+- Changed table CSS to be dynamic.
+- Add 3 new setting.
+
 ### Version 1.0.0
 - Changed the way the query table is created .
 - Add control to update or create webViewPanel.

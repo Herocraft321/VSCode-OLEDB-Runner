@@ -12,21 +12,36 @@ export function activate(context: vscode.ExtensionContext) {
 	function getConfig (){
 		const allConfig = vscode.workspace.getConfiguration("OLEDB-Runner");
 		
-		defProvider = allConfig["Default-Provider"] || '';
-		defDelimiter = allConfig["Default-Delimiter"] || '';
-		engine = allConfig["Engine"] || '';
+		defProvider = allConfig["Default-Provider"];
+		defDelimiter = allConfig["Default-Delimiter"];
+		engine = allConfig["Engine"];
+		defTableCss = allConfig["Table-CSS"];
+		imgConsulting = allConfig["Consulting-IMG"];
+		imgError = allConfig["Error-IMG"];
 	};
-
+	/**
+	 * Config variables
+	 */
 	let defProvider = '';
 	let defDelimiter = '';
+	let defTableCss = '';
+	let imgConsulting = '';
+	let imgError = '';
 
+	/**
+	 * Input Variables
+	 */
 	let path = '';
 	let provider = '';
 	let delimiter = '';
 	let engine = '';
 
+	/**
+	 * Control Panel Variables
+	 */
 	let panel: vscode.WebviewPanel;
 	let visible = false;
+
 	/**
 	 * Creating the first command to configure OLEDB.
 	 */
@@ -102,6 +117,9 @@ export function activate(context: vscode.ExtensionContext) {
 			prompt: `Determina el proveedor de OLEDB. Por defecto '${defProvider}'`
 		});
 
+		/**
+		 * Check that the default provider is not empty
+		 */
 		if (inProvider === undefined){
 			if(defProvider === undefined || defProvider.toString() === ''){
 				vscode.window.showErrorMessage('A default provider has not been set. Please enter a default provider.');
@@ -129,7 +147,7 @@ export function activate(context: vscode.ExtensionContext) {
 		let query = selectedText || allText;
 		
 		/**
-		 * It is checked that the 'ConnectionString' is filled, otherwise the command will end with an error message
+		 * It is checked that the 'path' is filled, otherwise the command will end with an error message
 		 */
 		if (path === ''){
 			vscode.window.showErrorMessage('Please enter a path to be able to execute the query. Run the command "Configure Route - OLEDB"');
@@ -143,44 +161,51 @@ export function activate(context: vscode.ExtensionContext) {
 		const process = spawn(runner, [cs,query,tempFile]); 
 
 		/**
+		 * If webViewPanel is visible don't create more
+		 */
+		if(!visible){
+			panel = vscode.window.createWebviewPanel(
+				'viewTable',
+				'OLEDB',
+				vscode.ViewColumn.Two,
+				{
+					retainContextWhenHidden:true,
+					enableScripts:true
+				}
+			);
+			visible = true;
+		}
+
+		/**
+		 * Shows a gif while waiting for the query to be performed
+		 */
+		panel.webview.html = `<h1>Consulting...</h1><br><img src="${imgConsulting}" />`;
+
+		/**
 		 * If the process was executed correctly, a view is created with the returned HTML table
 		 */
 		process.stdout.on('data', (data: any) => { 
 			data = fs.readFileSync(tempFile,{ encoding: 'utf8' });
-			/**
-			 * If webViewPanel is visible don't create more
-			 */
-			if(!visible){
-				panel = vscode.window.createWebviewPanel(
-					'viewTable',
-					'OLEDB',
-					vscode.ViewColumn.Two,
-					{
-						retainContextWhenHidden:true,
-						enableScripts:true
-					}
-				);
-				visible = true;
-			}
-
-			/**
-			 * When panel is closed visible is false
-			 */
-			panel.onDidDispose(() => {
-				visible = false;
-			});
-
+			
 			/**
 			 * Update content of panel
-			 */
-			panel.webview.html = `${data}`; 
+			*/
+			panel.webview.html = `${defTableCss}${data}`; 
 			fs.rm(tempFile);
 		}); 
 		
 		/**
+		 * When panel is closed visible is false
+		 */
+		panel.onDidDispose(() => {
+			visible = false;
+		});
+
+		/**
 		 * If the process gives an error, a message is sent with the error that occurred.
 		 */
 		process.stderr.on('data', (data: any) => { 
+			panel.webview.html = `<h1>ERROR</h1><p>${data}</p><img src="${imgError}" />`;
 			vscode.window.showErrorMessage(`Error: ${data}`);
 			console.error(`Error: ${data}`); 
 		}); 
