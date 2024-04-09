@@ -28,7 +28,7 @@ namespace OLEDB_Runner
 
             oledbConnection.Open();
 
-            if (args[1].ToLower().Trim().StartsWith("select"))
+            if (args[1].Replace("(","").ToLower().Trim().StartsWith("select"))
             {
                 OleDbDataAdapter adapter = new OleDbDataAdapter(args[1], oledbConnection);
                 DataSet dataSet = new DataSet();
@@ -36,16 +36,23 @@ namespace OLEDB_Runner
                 adapter.Fill(dataSet);
                 dt = dataSet.Tables[0];
             }
-            else
+            else if (
+                args[1].Replace("(", "").ToLower().Trim().StartsWith("insert") ||
+                args[1].Replace("(", "").ToLower().Trim().StartsWith("update") ||
+                args[1].Replace("(", "").ToLower().Trim().StartsWith("delete") 
+                )
             {
                 OleDbCommand comand = new OleDbCommand(args[1], oledbConnection);
                 comand.ExecuteNonQuery();
             }
+
             string html = @"<table border='1'>";
             //add header row
             html += "<tr>";
             for (int i = 0; i < dt.Columns.Count; i++)
+            {
                 html += "<th style='font-size:30px'>" + dt.Columns[i].ColumnName + "</th>";
+            }
             html += "</tr>";
             //add rows
             for (int i = 0; i < dt.Rows.Count; i++)
