@@ -5,3 +5,6 @@ node_modules
 *.vsix
 webpack.config.js
 vsc-extension-quickstart.md
+resources/OLEDB-Runner/bin
+resources/OLEDB-Runner/obj
+resources/OLEDB-Runner/Properties
