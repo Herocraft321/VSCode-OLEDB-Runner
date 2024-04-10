@@ -207,6 +207,36 @@ function activate(context) {
             console.log(`Child process exited with code ${code}`);
         });
     });
+    let disposable5 = vscode.commands.registerCommand('oledb-runner.setPath', async () => {
+        // The configuration is collected to update it
+        getConfig();
+        /**
+         * The user is asked to enter the route via keyboard.
+         */
+        var inputPath = ""; // = window.showDirectoryPicker();
+        await vscode.window.showOpenDialog({ canSelectFiles: false, canSelectFolders: true, canSelectMany: false }).then(fileUri => {
+            if (fileUri && fileUri[0]) {
+                console.log('Selected file: ' + fileUri[0].fsPath);
+                inputPath = fileUri[0].fsPath;
+            }
+        });
+        /**
+         * It is verified that the user has canceled the command by pressing the 'ESC' key
+         */
+        if (inputPath === undefined || inputPath === "") {
+            return;
+        }
+        /**
+         * It is checked that the route entered is valid; if not, an error message is sent and the command is called again.
+         */
+        if (inputPath === '' || !fs.existsSync(inputPath?.replace(/"/gi, ''))) {
+            console.log(inputPath);
+            vscode.window.showErrorMessage('The specified path does not exist. Please enter a valid route.');
+            vscode.commands.executeCommand('oledb-runner.configurarRuta');
+            return;
+        }
+        path = inputPath;
+    });
     /**
      * Variables are called with commands
      */
@@ -214,6 +244,7 @@ function activate(context) {
     context.subscriptions.push(disposable2);
     context.subscriptions.push(disposable3);
     context.subscriptions.push(disposable4);
+    context.subscriptions.push(disposable5);
 }
 exports.activate = activate;
 // This method is called when your extension is deactivated

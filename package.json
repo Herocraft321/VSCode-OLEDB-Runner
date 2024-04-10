@@ -28,6 +28,10 @@
         "title": "Configure Path - OLEDB"
       },
       {
+        "command": "oledb-runner.setPath",
+        "title": "Configure Path IU - OLEDB"
+      },
+      {
         "command": "oledb-runner.execute",
         "title": "Execute - OLEDB"
       },
@@ -44,7 +48,14 @@
       "activitybar": [
         {
           "id": "oledb-runner",
-          "title": "OLEDB Execution",
+          "title": "OLEDB Runner",
+          "icon": "./resources/icon.svg"
+        }
+      ],
+      "panel": [
+        {
+          "id": "oledb-runner",
+          "title": "OLEDB Runner",
           "icon": "./resources/icon.svg"
         }
       ]
@@ -56,7 +67,18 @@
           "name": "configuration"
         }
       ]
-    },"configuration": [
+    },
+    "viewsWelcome": [
+      {
+				"view": "configuration",
+				"contents": "Save the directory where OLEDB will be used.\n[Select folder](command:oledb-runner.setPath?[true])"
+			},
+      {
+        "view": "configuration",
+        "contents": "path"
+      }
+    ],
+    "configuration": [
       {
         "title": "OLEDB-Runner",
         "properties": {

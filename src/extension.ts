@@ -218,6 +218,36 @@ export function activate(context: vscode.ExtensionContext) {
 		});
 	});
 	
+	let disposable5 = vscode.commands.registerCommand('oledb-runner.setPath', async () => {	
+		// The configuration is collected to update it
+		getConfig();
+
+		/**
+		 * The user select folder in a window.
+		 */
+		var inputPath = ""; // = window.showDirectoryPicker();
+		const options: vscode.OpenDialogOptions = {
+			canSelectFiles: false,
+			canSelectFolders:true,
+			canSelectMany:false
+		};
+		await vscode.window.showOpenDialog(options).then(fileUri => {
+			if (fileUri && fileUri[0]) {
+					inputPath = fileUri[0].fsPath;
+			}
+		});
+
+		/**
+		 * It is verified that the user has canceled the command by pressing the 'ESC' key
+		 */
+		if (inputPath === undefined || inputPath === ""){
+			return;	
+		}
+
+		path = inputPath;
+	});	
+
+
 	/**
 	 * Variables are called with commands
 	 */
@@ -225,6 +255,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(disposable2);
 	context.subscriptions.push(disposable3);
 	context.subscriptions.push(disposable4);
+	context.subscriptions.push(disposable5);
 }
 
 // This method is called when your extension is deactivated
